@@ -38,6 +38,7 @@ for buttonPin in BUTTONS:
     GPIO.add_event_detect(buttonPin, GPIO.FALLING, callback=button_pressed_callback, bouncetime=250) 
 for ledPin in LEDS:
     GPIO.setup(ledPin, GPIO.OUT)
+    GPIO.output(ledPin, GPIO.HIGH)
 
 signal.signal(signal.SIGINT, signal_handler)
 signal.pause()
