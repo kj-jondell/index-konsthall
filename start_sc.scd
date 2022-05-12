@@ -1,7 +1,7 @@
 #!/usr/local/bin/sclang
 
 var channelMap = [1, 2, 4, 5]; //change this map if necessary!
-var channels = Array.fill(4, 1);
+//var channels = Array.fill(4, 1);
 var passThru = Array.new(4);
 var maxChan = 6; //TODO ta bort
 
@@ -17,10 +17,14 @@ SynthDef.new("piMixer", {
 thisProcess.addOSCRecvFunc(
 	{ |msg, time, addr|
 		if (msg[0] == '/channel'){
-			channels[msg[1]] = (channels[msg[1]]+1)%2;
-			passThru[msg[1]].set(\vol, channels[msg[1]]);
+			//channels[msg[1]] = (channels[msg[1]]+1)%2;
+			//passThru[msg[1]].set(\vol, channels[msg[1]]);
 			// postf("% received\n% is new value\n", msg[1], channels[msg[1]]); // DEBUG
 			// postf("% and %\n", channels, msg[1]);
+            msg[1..].do({
+                arg val, index;
+                passThru[index].set(\vol, val);
+            });
 		}
 	}
 );
